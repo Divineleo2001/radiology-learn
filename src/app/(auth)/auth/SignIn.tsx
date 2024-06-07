@@ -32,7 +32,7 @@ const SignIn = () => {
     try {
   
       await SignedInUser(values);
-      router.push("/");
+      router.push("/dashboard");
     } catch (error) {
       console.log(error);
     }

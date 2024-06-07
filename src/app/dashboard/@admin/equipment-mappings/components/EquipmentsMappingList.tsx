@@ -1,16 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import Modal from "../../../../modules/shared/Modal";
 
 import { Button } from "@/components/ui/button";
-import { PatientTestsData } from "@/schema/patient-tests";
 import { EquipmentsMappingData } from "@/schema/equipmentmapping";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import EquipmentsMappingForm from "./EquipmentsMappingForm";
 import { EmployeeData } from "@/schema/employees";
 import { EquipmentsData } from "@/schema/equipments";
+import Modal from "@/modules/shared/Modal";
 
 export type TOpenModal = (equipmentMapping?: EquipmentsMappingData) => void;
 

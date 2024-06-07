@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Modal from "../../../../modules/shared/Modal";
-
 import { Button } from "@/components/ui/button";
 import { EmployeeData, TransformEmployeeData } from "@/schema/employees";
 import { ServiceData } from "@/schema/services";
@@ -11,6 +9,7 @@ import { columns } from "./columns";
 import { DataTable } from "./data-table";
 import { RankData } from "@/schema/ranks";
 import { UnitData } from "@/schema/units";
+import Modal from "@/modules/shared/Modal";
 
 export type TOpenModal = (employee?: EmployeeData) => void;
 

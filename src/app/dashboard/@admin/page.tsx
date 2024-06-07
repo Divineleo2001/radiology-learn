@@ -64,7 +64,6 @@ const DashboardComponent = async () => {
 
   return (
     <Suspense fallback={<Loading />}>
-      this is the admin dashboard
       
       <Dashboard  patientTests={transformedPatientTests} patients={patientInfo} tests={childTestsInfo}  />
     </Suspense>

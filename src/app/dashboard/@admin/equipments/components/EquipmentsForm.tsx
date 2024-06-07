@@ -22,14 +22,13 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { useForm } from "react-hook-form";
-import { useBackPath } from "../../../../modules/shared/BackButton";
+import { useBackPath } from "../../../../../modules/shared/BackButton";
 import { DialogClose } from "@/components/ui/dialog";
 import { EquipmentsData, Equipmentsform, formData } from "@/schema/equipments";
 import { RoomData } from "@/schema/rooms";
 import { createEquipmentAction } from "@/server_actions/actions/equipments";
 
 const EquipmentsForm = ({ rooms }: { rooms: RoomData[] }) => {
-
   const { errors, hasErrors, handleChange, setErrors } =
     useValidatedForm<EquipmentsData>(formData);
   const form = useForm<Equipmentsform>({
@@ -49,7 +48,7 @@ const EquipmentsForm = ({ rooms }: { rooms: RoomData[] }) => {
         roomId: Number(data.roomId),
       };
 
-      console.log(payload);
+
       await createEquipmentAction(payload);
     } catch (e) {
       console.log(editing);

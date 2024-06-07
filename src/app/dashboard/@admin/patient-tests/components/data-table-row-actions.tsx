@@ -11,7 +11,6 @@ import {
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
@@ -20,7 +19,6 @@ import {
 
 import { TransformedPatientTests } from "@/schema/patient-tests";
 import { priorities, statuses } from "../data/data";
-import { Pathname } from "@/modules/shared/Pathname";
 import {
   deletePatientTestsAction,
   patchPatientTestPriorityAction,
@@ -28,21 +26,11 @@ import {
 } from "@/server_actions/actions/patient-tests";
 import { format } from "date-fns";
 
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import Modal from "@/modules/shared/Modal";
 import { useState } from "react";
-import Reschedule from "./edit/Reschedule";
+import Reschedule from "./Reschedule";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -52,7 +40,7 @@ export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
   const patientTest = TransformedPatientTests.parse(row.original);
-  const [open, setOpen] = useState(false);
+  const [openReschedule, setOpenReschedule] = useState(false);
   const date = format(new Date(patientTest.startTime), "yyyy-MM-dd'T'HH:mm");
   const reschedulePayload = {
     id: patientTest.id,
@@ -60,10 +48,18 @@ export function DataTableRowActions<TData>({
     testCategoriesId: patientTest.testCategoriesId,
     startTime: date,
   };
+  const pathname = usePathname();
 
+  const editpath = `${patientTest.id}`;
+
+  const editpathcheck = pathname + "/" + patientTest.id;
   return (
     <>
-      <Modal open={open} setOpen={setOpen} title="Reschedule">
+      <Modal
+        open={openReschedule}
+        setOpen={setOpenReschedule}
+        title="Reschedule"
+      >
         <Reschedule payload={reschedulePayload} />
       </Modal>
 
@@ -72,17 +68,19 @@ export function DataTableRowActions<TData>({
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
+            className="flex h-8 w-8 p-0 data-[state=openReschedule]:bg-muted"
           >
             <DotsHorizontalIcon className="h-4 w-4" />
             <span className="sr-only">Open menu</span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
-          <DropdownMenuItem onClick={() => setOpen(true)}>
+          <DropdownMenuItem onClick={() => setOpenReschedule(true)}>
             Reschedule
           </DropdownMenuItem>
-          <DropdownMenuItem>Make a copy</DropdownMenuItem>
+          <Link href={editpathcheck}>
+            <DropdownMenuItem >Edit</DropdownMenuItem>
+          </Link>
           <DropdownMenuItem>Favorite</DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuSub>

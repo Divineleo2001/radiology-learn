@@ -40,7 +40,7 @@ export function DataTableToolbar<TData>({
       const templatedDate = format(today, "yyyy-MM-dd");
       table.getColumn("startTime")?.setFilterValue(templatedDate);
     }
-  }, [date]);
+  }, []);
 
   return (
     <div className="flex items-center justify-between">

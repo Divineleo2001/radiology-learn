@@ -20,7 +20,7 @@ import { useValidatedForm } from "@/hooks/useValidatedForm";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState, useTransition } from "react";
+import React, { useState, useTransition } from "react";
 import { useFormStatus } from "react-dom";
 import { useForm } from "react-hook-form";
 import { useBackPath } from "../../../../../modules/shared/BackButton";

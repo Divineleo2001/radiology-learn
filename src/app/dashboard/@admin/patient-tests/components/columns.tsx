@@ -110,6 +110,21 @@ export const columns: ColumnDef<PatientTestsData>[] = [
     }
   },
   {
+    accessorKey: "recommendedDoctor",
+    header: "Recommended Doctor",
+    cell: ({ row }) => {
+      const value:string = row.getValue("recommendedDoctor");
+      if (!value) {
+        return null;
+      }
+      return (
+        <div>
+          <span>{value}</span>
+        </div>
+      )
+    }
+  },
+  {
     accessorKey: "endTime",
     header: "End Time",
     cell: ({ row }) => {

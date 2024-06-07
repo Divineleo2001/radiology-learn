@@ -83,6 +83,7 @@ const PatientTestsForm = ({
         patientInfoId: Number(data.patientInfoId),
         testCategoriesId: Number(data.testCategoriesId),
         startTime: new Date(`${selectedDate}T${data.startTime}:00.000Z`),
+        recommendedDoctor: data.recommendedDoctor,
       };
 
       await createPatientTestsAction(payload);
@@ -92,107 +93,135 @@ const PatientTestsForm = ({
   };
 
   return (
-    <div className=" mr-10 ml-5">
-      <div className=" mt-5 rounded-md font-bold text-xl">
+    <div className="">
+      <div className="  rounded-md font-bold text-xl">
         Date : {selectedDate}
-      </div>
+      </div>{" "}
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-          <div className="flex gap-5">
-            <div className="flex-1">
+          <div>
+            <FormField
+              control={form.control}
+              name="patientInfoId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Patient Info</FormLabel>
+                  <FormControl>
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select Patient"></SelectValue>
+                      </SelectTrigger>
+                      <SelectContent>
+                        {patients?.map((patient) => (
+                          <SelectItem
+                            key={patient.id}
+                            value={patient.id.toString()}
+                          >
+                            {patient.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="recommendedDoctor"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Recommended Doctor</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="priority"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Priority</FormLabel>
+                  <FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select Priority" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="high">High</SelectItem>
+                        <SelectItem value="medium">Medium</SelectItem>
+                        <SelectItem value="low">Low</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="testCategoriesId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Please select the test category</FormLabel>
+                  <FormControl>
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select Test Category"></SelectValue>
+                      </SelectTrigger>
+                      <SelectContent>
+                        {tests?.map((category) => (
+                          <SelectItem
+                            key={category.id}
+                            value={category.id.toString()}
+                          >
+                            {category.testName}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <div className="flex gap-4">
+            <div>
               <FormField
                 control={form.control}
-                name="patientInfoId"
+                name="startTime"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Patient Info</FormLabel>
+                    <FormLabel>Select the Time</FormLabel>
                     <FormControl>
-                      <Select
-                        onValueChange={field.onChange}
-                        value={field.value}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select Patient"></SelectValue>
-                        </SelectTrigger>
-                        <SelectContent>
-                          {patients?.map((patient) => (
-                            <SelectItem
-                              key={patient.id}
-                              value={patient.id.toString()}
-                            >
-                              {patient.name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="priority"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Priority</FormLabel>
-                    <FormControl>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select Priority" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="high">High</SelectItem>
-                          <SelectItem value="medium">Medium</SelectItem>
-                          <SelectItem value="low">Low</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <Input
+                        placeholder="Enter Start Time"
+                        type="time"
+                        {...field}
+                        // Use the stored date
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
-
             <div className="flex-1">
-              <FormField
-                control={form.control}
-                name="testCategoriesId"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Please select the test category</FormLabel>
-                    <FormControl>
-                      <Select
-                        onValueChange={field.onChange}
-                        value={field.value}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select Test Category"></SelectValue>
-                        </SelectTrigger>
-                        <SelectContent>
-                          {tests?.map((category) => (
-                            <SelectItem
-                              key={category.id}
-                              value={category.id.toString()}
-                            >
-                              {category.testName}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
               <FormField
                 control={form.control}
                 name="status"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Status</FormLabel>
-                    <FormControl>
+                    <FormControl className="">
                       <Select
                         onValueChange={field.onChange}
                         defaultValue={field.value}
@@ -216,32 +245,6 @@ const PatientTestsForm = ({
               />
             </div>
           </div>
-
-          <div className="flex gap-5">
-            <div className="flex-1">
-              <FormField
-                control={form.control}
-                name="startTime"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Please enter the date and time for your tests
-                    </FormLabel>
-                    <FormControl className="w-56">
-                      <Input
-                        placeholder="Enter Start Time"
-                        type="time"
-                        {...field}
-                        // Use the stored date
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-
           <FormField
             control={form.control}
             name="clinicalNote"

@@ -12,6 +12,9 @@ import parse from "html-react-parser";
 import TemplateAdd from "./TemplateAdd";
 import PatientReport from "./PatientReport";
 import { useRouter } from "next/navigation";
+import { PDFViewer } from "@react-pdf/renderer";
+import PdfFunction from "./PdfFunction";
+import MyDocument from "./PdfFunction";
 
 export default function PatientTestReport({
   pageData,
@@ -23,14 +26,7 @@ export default function PatientTestReport({
 
   const date = new Date();
   //pretify the date
-  const formattedDate = date.toLocaleDateString("en-US", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-    timeZone: "UTC",
-    hour: "numeric",
-    minute: "numeric",
-  });
+
 
   const startTime = new Date(data.startTime);
   const DateView = startTime.toString().slice(0, 15);
@@ -44,6 +40,7 @@ export default function PatientTestReport({
     const regex = /class/gi;
     return content.replace(regex, "className");
   };
+  const [openpdfreport, setOpenpdfreport] = useState(false);
 
   const router = useRouter();
 
@@ -60,6 +57,8 @@ export default function PatientTestReport({
     testCategoriesId: data.testCategoriesId,
     patientReport: data.patientReport || data.initialPatientReport || "",
   };
+
+  // const patientReportTopdf = 
 
   return (
     <main>
@@ -92,7 +91,7 @@ export default function PatientTestReport({
               {/* (selector functionality not yet implemented) */}
               <div className="">
                 <Button className="" variant={"outline"}>
-                  <Badge>{data.status}</Badge>
+                  {data.status}
                 </Button>
               </div>
             </div>
@@ -185,12 +184,28 @@ export default function PatientTestReport({
               ) : (
                 <h3> Report is there</h3>
               )}
-              {parsedReport}
+              {/* {parsedReport} */}
               {parsedPatientReport}
             </div>
           </div>
         </div>
       </div>
+      <Modal
+        open={openpdfreport}
+        setOpen={setOpenpdfreport}
+        title="Report"
+        className="sm:max-w-[425px] min-w-[900px] min-h-[500px] "
+      >
+        <PDFViewer width={800} height={600}>
+          <MyDocument startTime={StartTime} data={pageData}/>
+        </PDFViewer>
+      </Modal>
+      <Button onClick={() => setOpenpdfreport(true)}>Open Report</Button>
+      {/* <div className="flex justify-center">
+      <PDFViewer width={800} height={600}>
+          <MyDocument startTime={StartTime} data={pageData}/>
+        </PDFViewer>
+      </div> */}
     </main>
   );
 }

@@ -82,7 +82,7 @@ export const TransformedPatientTests = z.object({
   endTime: z.string(),
   patientName: z.string(),
   testName: z.string(),
-  recommendedDoctor: z.string(),
+  recommendedDoctor: z.string().nullable(),
 });
 const insertPatientTestsParams = PatientTestsDataForm.omit({
   id: true,

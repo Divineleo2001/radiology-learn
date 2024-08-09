@@ -4,9 +4,6 @@ import { cookies } from "next/headers";
 import { cookieLogin } from "./cookieLogin";
 import { signInForm } from "@/inferedTypes";
 
-
-
-
 export const SignedInUser = async (values: signInForm) => {
   const authenticateUrl = process.env.BACKEND_URL + "/api/authenticate";
   try {
@@ -23,11 +20,4 @@ export const SignedInUser = async (values: signInForm) => {
     console.error("An error occurred:", error);
     // You can add custom error handling logic here
   }
-const response = await axios.post(authenticateUrl, {
-  username: values.username,
-  password: values.password,
-});
-
-
-}
-
+};

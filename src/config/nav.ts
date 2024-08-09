@@ -2,10 +2,6 @@ import { SidebarLink } from "@/components/SidebarItems";
 import { Boxes, Cog, Compass, Dice4, FlaskConical, Globe, HomeIcon, Shield, ShieldHalf, Syringe, Wrench } from "lucide-react";
 import { Building, Accessibility } from "lucide-react";
 
-type AdditionalLinks = {
-  title: string;
-  links: SidebarLink[];
-};
 
 export const defaultLinks: SidebarLink[] = [
   { href: "/dashboard/patients", title: "Patients", icon: Accessibility },
@@ -18,9 +14,6 @@ export const defaultLinks: SidebarLink[] = [
   { href: "/dashboard/equipments", title: "Equipments", icon: Wrench},
   { href: "/dashboard/test-categories", title: "Test Categories", icon: FlaskConical },
   { href: "/dashboard/equipment-mappings", title: "Equipment Mappings", icon:Compass  },
-  
-
-  // { href: "/dashboard/settings", title: "Settings", icon: Cog },
 ];
 
 // export const additionalLinks: AdditionalLinks[] = [

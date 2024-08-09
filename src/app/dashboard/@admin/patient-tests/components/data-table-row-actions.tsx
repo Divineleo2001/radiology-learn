@@ -50,9 +50,15 @@ export function DataTableRowActions<TData>({
   };
   const pathname = usePathname();
 
-  const editpath = `${patientTest.id}`;
+  // const editpath = `${patientTest.id}`;
+
+  const checkPath = pathname.includes("/dashboard/");
 
   const editpathcheck = pathname + "/" + patientTest.id;
+  const dashboardPath = "/dashboard/patient-tests/" + patientTest.id;
+
+  //if editpathcheck contains dashboard then path will be route to /dashboard/patient-test-timings/[id] or else it will be the same
+
   return (
     <>
       <Modal
@@ -78,7 +84,7 @@ export function DataTableRowActions<TData>({
           <DropdownMenuItem onClick={() => setOpenReschedule(true)}>
             Reschedule
           </DropdownMenuItem>
-          <Link href={editpathcheck}>
+          <Link href={checkPath ? editpathcheck : dashboardPath}>
             <DropdownMenuItem>View</DropdownMenuItem>
           </Link>
           <DropdownMenuItem>Favorite</DropdownMenuItem>

@@ -1,8 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import DropDown from "@/modules/shared/DropDown";
-import { EditButton } from "@/modules/shared/EditButton";
 import { Pathname } from "@/modules/shared/Pathname";
 import { ServiceData } from "@/schema/services";
 import { deleteServiceAction } from "@/server_actions/actions/services";
